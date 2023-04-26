@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "apexagentesimple"
+version = "0.1.0"
+description = ""
+authors = ["jo-project <jo.project.0911@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+customtkinter = "^5.1.2"
+pillow = "^9.5.0"
+jsonwebtoken = "^1.0.0"
+httpx = "^0.24.0"
+prompt-toolkit = "^3.0.38"
+prettytable = "^3.7.0"
+colorama = "^0.4.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

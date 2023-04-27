@@ -16,14 +16,10 @@ for choice, value in choices.items():
             print("Error: too many directories specified.")
             exit(1)
         directory = value
-        
+
 if directory:
     script_path = os.path.join(os.getcwd(), directory, 'app.py')
     if os.path.exists(script_path):
         exec(open(script_path).read())
     else:
         print(f"Error: script {args.script} not found")
-
-
-
-

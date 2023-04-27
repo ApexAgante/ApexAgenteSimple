@@ -1,0 +1,24 @@
+COMMAND=$(grep -oP '(?<=command = ")[^"]*' run.toml)
+
+ARGS=""
+USE_POETRY=false
+
+if [ -z "$2" ]; then
+  USE_POETRY=true
+fi
+
+if [ -z "$1" ]; then
+  ARGS="--cli"
+else
+  ARGS=$1
+fi
+
+echo $ARGS
+
+if [ "$USE_POETRY" = true ]; then
+  COMMAND="poetry run $COMMAND $ARGS"
+else
+  COMMAND = "$COMMAND $AGRS"
+fi
+
+eval $COMMAND

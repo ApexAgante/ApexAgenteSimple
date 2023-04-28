@@ -44,8 +44,14 @@ Go to the project directory
   cd ApexAgenteSimple
 ```
 
-[OPTIONAL]
-Make python virtualenv
+<details>
+<summary>Creating a Python virtual environment</summary>
+To create a Python virtual environment, run the following command
+
+python3 -m venv venv
+. venv/bin/activate
+
+</details>
 
 ```bash
 python3 -m venv venv

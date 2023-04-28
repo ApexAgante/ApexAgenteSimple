@@ -40,13 +40,16 @@ Import from github
 
 <details open>
 <summary>Go to the project directory</summary>
+Go to the cloned project directory by using this command
+
 ```bash
-  cd ApexAgenteSimple
+cd ApexAgenteSimple
 ```
+
 </details>
 
 <details>
-<summary style="color: gray;">Creating a Python virtual environment (optional)</summary>
+<summary class="optional">Creating a Python virtual environment (optional)</summary>
 To create a Python virtual environment, run the following command
 
 ```bash
@@ -70,3 +73,9 @@ To start the application you can run this command
 >
 > - The `--type` option specifies whether to run the application in GUI mode or CLI mode. You can use `--gui` to run the GUI version or `--cli` to run the CLI version
 > - The `--n` options deterime whether to use Poetry to run the application. Use `--n` to run without Poetry. If you choose to run with Poetry, ensure that you have Poetry installed on your system before running the application.
+
+<style>
+  .optional > summary {
+    color: gray;
+  }
+</style>

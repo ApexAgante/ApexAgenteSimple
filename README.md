@@ -58,8 +58,7 @@ Start the application
 ./runner <--type> [--n]
 ```
 
-<div style="border: 1px solid #ccc; background-color: #f0f0f0; padding: 10px;">
-    <p><strong>Note:</strong></p>
-    <p>The '--type' option specifies whether to run the application in GUI mode or CLI mode. You can use '--type=gui' to run the GUI version or '--type=cli' to run the CLI version.</p>
-    <p>The '--n' options determine whether to use Poetry to run the application. Use '--n' to run without Poetry. If you choose to run with Poetry, ensure that you have Poetry installed on your system before running the application.</p>
-</div>
+> **Note**
+>
+> - The `--type` option specifies whether to run the application in GUI mode or CLI mode. You can use `--gui` to run the GUI version or `--cli` to run the CLI version
+> - The `--n` options deterime whether to use Poetry to run the application. Use `--n` to run without Poetry. If you choose to run with Poetry, ensure that you have Poetry installed on your system before running the application.

@@ -13,13 +13,13 @@ for sub in subdirs:
     }
 
 
-for dir, cmd in dir_choices.items():
+for directory, choice in dir_choices.items():
     parser.add_argument(
-        cmd["main"],
-        cmd["alias"],
-        dest=cmd["dest"],
+        choice["main"],
+        choice["alias"],
+        dest=choice["dest"],
         action="store_true",
-        help=f"Run script in '{dir}' directory.",
+        help=f"Run script in '{directory}' directory.",
     )
 
 

@@ -11,8 +11,8 @@ from prompt_toolkit.formatted_text import (
 )
 from prompt_toolkit.styles import Style
 from prompt_toolkit.shortcuts import set_title, clear
-from cli.data import Data
-from cli.completer import MyCustomCompleter
+from app.cli.data import Data
+from app.cli.completer import TerminalCompleter
 
 
 colorama.init()
@@ -38,7 +38,7 @@ style = Style.from_dict(
     }
 )
 
-        
+
 def get_prompt() -> HTML:
     """
     Build the prompt dynamically every time its rendered.
@@ -81,19 +81,22 @@ def help_command():
     print(" - all: Get all data")
     print(" - get: Get a data from host name")
     print(ColorStyle.RESET_ALL)
-        
-    
+
+
 def clear_command():
     clear()
-        
+
+
 def all_command():
     global data
     data.get_all_data()
 
+
 def get_command(host):
     global data
     data.check_if_data_exists(host)
-        
+
+
 commands = {
     "help": help_command,
     "clear": clear_command,
@@ -107,7 +110,11 @@ try:
     set_title("Simple-ApexAgente")
     while True:
         # Prompt user for command input using prompt-toolkit
-        command_input = session.prompt(get_prompt, style=style, refresh_interval=1, completer=MyCustomCompleter(), complete_while_typing=True, complete_in_thread=True)
+        command_input = session.prompt(get_prompt, style=style,
+                                       refresh_interval=1,
+                                       completer=TerminalCompleter(),
+                                       complete_while_typing=True,
+                                       complete_in_thread=True)
         # Look up and execute the corresponding command function
         command_input_split = command_input.split()
         try:
@@ -125,4 +132,3 @@ try:
             print(f"{Fore.RED}{error_msg}{Fore.RESET}")
 except KeyboardInterrupt:
     print(f"{Fore.RED} ❯")
-    

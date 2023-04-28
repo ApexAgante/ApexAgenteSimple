@@ -33,7 +33,8 @@ class Data:
         base64_string = b64encode(hash_object.digest()).decode('utf-8')
         return base64_string
 
-    def __create_jwt_token(self, http_method: str, iat=time(), algorithm='HS256', version='V1'):
+    def __create_jwt_token(self, http_method: str,
+                           iat=time(), algorithm='HS256', version='V1'):
         checksum = self.__create_checksum(http_method)
         payload = {
             'appid': self.__app_id,

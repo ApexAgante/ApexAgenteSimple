@@ -1,25 +1,41 @@
 import argparse
 import os
 
-parser = argparse.ArgumentParser(description='Run a script in a subdirectory.')
-subdirs = next(os.walk('.'))[1]
-choices = {f"--{d}": d for d in subdirs}
-for i, value in choices.items():
-    parser.add_argument(i, action='store_true')
+parser = argparse.ArgumentParser(description="Run a script in a subdirectory.")
+subdirs = next(os.walk("./app"))[1]
+
+dir_choices = {}
+for sub in subdirs:
+    dir_choices[sub] = {
+        "main": f"--{sub}",
+        "alias": f"-{sub[0:1]}",
+        "dest": sub,
+    }
+
+
+for dir, cmd in dir_choices.items():
+    parser.add_argument(
+        cmd["main"],
+        cmd["alias"],
+        dest=cmd["dest"],
+        action="store_true",
+        help=f"Run script in '{dir}' directory.",
+    )
+
 
 args = parser.parse_args()
 
 directory = None
-for choice, value in choices.items():
-    if getattr(args, value, False):
+for dir, cmd in dir_choices.items():
+    if getattr(args, dir, False):
         if directory:
-            print("Error: too many directories specified.")
-            exit(1)
-        directory = value
+            exit(0)
+        directory = dir
 
-if directory:
-    script_path = os.path.join(os.getcwd(), directory, 'app.py')
-    if os.path.exists(script_path):
-        exec(open(script_path).read())
-    else:
-        print(f"Error: script {args.script} not found")
+if __name__ == "__main__":
+    if directory:
+        script_path = os.path.join(os.getcwd(), "app", directory, "app.py")
+        if os.path.exists(script_path):
+            exec(open(script_path).read())
+        else:
+            print("Error: script not found")

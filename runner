@@ -13,8 +13,6 @@ else
   ARGS=$1
 fi
 
-echo $ARGS
-
 if [ "$USE_POETRY" = true ]; then
   COMMAND="poetry run $COMMAND $ARGS"
 else

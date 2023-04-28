@@ -5,6 +5,7 @@ from pathlib import Path
 from tkinter import Canvas, Frame, Button, PhotoImage, Toplevel, StringVar
 from .dashboard.gui import Dashboard
 from .get.gui import Get
+from .all.gui import All
 
 OUTPUT_PATH = Path(__file__).parent
 ASSETS_PATH = OUTPUT_PATH / Path(r"./assets")
@@ -123,6 +124,31 @@ class MainWindow(Toplevel):
             height=47.0,
         )
 
+        button_image_3 = PhotoImage(
+            file=relative_to_assets("button_3.png")
+        )
+
+        button_image_3_hover = PhotoImage(
+            file=relative_to_assets("button_3_hover.png")
+        )
+
+        self.all_data_btn = Button(
+            self.canvas,
+            image=button_image_3,
+            background="#E75656",
+            borderwidth=0,
+            highlightthickness=0,
+            command=lambda: self.handler_btn_press(self.all_data_btn, "all"),
+            relief="flat"
+        )
+
+        self.all_data_btn.place(
+            x=7.0,
+            y=233.0,
+            width=199.0,
+            height=47.0
+        )
+
         self.heading = self.canvas.create_text(
             254.0,
             42.0,
@@ -143,7 +169,8 @@ class MainWindow(Toplevel):
 
         self.windows = {
             "dash": Dashboard(self),
-            "get": Get(self)
+            "get": Get(self),
+            "all": All(self)
         }
 
         self.handler_btn_press(self.dashboard_btn, "dash")
@@ -163,6 +190,15 @@ class MainWindow(Toplevel):
         self.get_data_btn.bind(
             "<Leave>", lambda e: self.on_button_leave(e, button_image_2)
         )
+
+        self.all_data_btn.bind(
+            "<Enter>", lambda e: self.on_button_enter(e, button_image_3_hover)
+        )
+
+        self.all_data_btn.bind(
+            "<Leave>", lambda e: self.on_button_leave(e, button_image_3)
+        )
+
         self.resizable(False, False)
         self.mainloop()
 

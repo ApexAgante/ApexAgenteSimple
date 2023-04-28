@@ -11,12 +11,11 @@ def relative_to_assets(path: str) -> Path:
     return ASSETS_PATH / Path(path)
 
 
-def get():
-    Get()
+def all():
+    All()
 
 
-class Get(Frame):
-
+class All(Frame):
     def __init__(self, parent, controller=None, *args, **kwargs):
         Frame.__init__(self, parent, *args, **kwargs)
         self.parent = parent
@@ -59,18 +58,18 @@ class Get(Frame):
             49.0,
             33.0,
             anchor="nw",
-            text="View Data",
+            text="All Data",
             fill="#E65656",
-            font=("Arial", 26 * -1, "bold")
+            font=("Montserrat Bold", 26 * -1)
         )
 
         canvas.create_text(
             49.0,
             65.0,
             anchor="nw",
-            text="Check data",
+            text="Obtain every data",
             fill="#808080",
-            font=("Arial", 16 * -1, "bold")
+            font=("Montserrat SemiBold", 16 * -1)
         )
 
         canvas.create_rectangle(
@@ -81,71 +80,28 @@ class Get(Frame):
             fill="#EFEFEF",
             outline="")
 
-        self.button_image_1 = PhotoImage(
+        self.reload_image_1 = PhotoImage(
             file=relative_to_assets("button_1.png"))
         self.reload = Button(
             self,
-            image=self.button_image_1,
+            image=self.reload_image_1,
             borderwidth=0,
             highlightthickness=0,
-            command=lambda: print("button_1 clicked"),
             relief="flat"
         )
         self.reload.place(
-            x=393.0,
+            x=603.0,
             y=33.0,
             width=53.0,
             height=53.0
         )
 
-        self.image_image_1 = PhotoImage(
-            file=relative_to_assets("image_1.png"))
-        image_1 = canvas.create_image(
-            556.0,
-            59.0,
-            image=self.image_image_1
-        )
-
-        self.entry_image_1 = PhotoImage(
-            file=relative_to_assets("entry_1.png"))
-        entry_bg_1 = canvas.create_image(
-            594.5,
-            60.0,
-            image=self.entry_image_1
-        )
-        self.search_box = Entry(
-            self,
-            bd=0,
-            bg="#EFEFEF",
-            fg="#000716",
-            highlightthickness=0
-        )
-        self.search_box.place(
-            x=501.0,
-            y=48.0,
-            width=147.0,
-            height=22.0
-        )
-
-        self.button_image_2 = PhotoImage(
-            file=relative_to_assets("button_2.png"))
-        self.search = Button(
-            self,
-            image=self.button_image_2,
-            borderwidth=0,
-            highlightthickness=0,
-            relief="flat"
-        )
-        self.search.place(
-            x=470.0,
-            y=48.0,
-            width=24.0,
-            height=25.0
-        )
-
         self.columns = {
-            "Name": ["Name", 150],
-            "Value": ["Value", 150]
+            "ID": ["ID", 15],
+            "Entity ID": ["Entity ID", 200],
+            "Host Name": ["Host Name", 140],
+            "IP Address": ["IP Address", 120],
+            "Status": ["Status", 40]
         }
 
         self.style = Style()
@@ -184,28 +140,8 @@ class Get(Frame):
         self.treeview.tag_configure('focus', background="#d9d7d7")
         self.treeview.bind("<Motion>", self.on_motion)
         self.treeview.bind("<1>", self.on_select)
+        self.reload.bind("<Enter>", lambda e: self.on_reload_click(e))
         self.last_focus = None
-
-        self.search.bind("<Enter>", lambda e: self.on_search_click(e))
-
-    def get_data(self, host: str):
-        data = self.data_parent.fetch_data_from_host_name(host)
-        return data
-
-    def on_reload_click(self, e):
-        if self.host is not None:
-            data = self.get_data(self.host)
-            if data:
-                self.refresh_data(data)
-
-    def on_search_click(self, e):
-        host = self.search_box.get()
-        if self.host is None or self.host != host:
-            self.host = host
-        self.search_box.delete(first=0, last=len(host) - 1)
-        data = self.get_data(self.host)
-        if data:
-            self.refresh_data(data)
 
     def on_select(self, e):
         selection = e.widget.selection()
@@ -222,28 +158,23 @@ class Get(Frame):
             self.treeview.item(_iid, tags=['focus'])
             self.last_focus = _iid
 
-    def refresh_data(self, data):
+    def get_data(self):
+        data = self.data_parent.fetch_data()
+        if data:
+            return data
+
+    def on_reload_click(self, e):
+        self.refresh_data()
+
+    def refresh_data(self):
+        data = self.get_data()
         self.treeview.delete(*self.treeview.get_children())
-        data_res = [
-            {
-                "key": "ID",
-                "value": data['entity_id']
-            },
-            {
-                "key": "Host Name",
-                "value": data['host_name']
-            },
-            {
-                "key": "IP Address",
-                "value": data['ip_address_list']
-            },
-            {
-                "key": "Status",
-                "value": data['connection_status']
-            }
-        ]
-        for data in data_res:
-            key = data['key']
-            value = data['value']
-            row = (key, value)
+        count = 0
+        for d in data:
+            count += 1
+            entity_id = d['entity_id']
+            host_name = d['host_name']
+            ip = d['ip_address_list']
+            status = d['connection_status']
+            row = (count, entity_id, host_name, ip, status)
             self.treeview.insert("", "end", values=row)

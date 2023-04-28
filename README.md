@@ -38,14 +38,15 @@ Import from github
 
 ## Run Locally
 
-Go to the project directory
-
+<details open>
+<summary>Go to the project directory</summary>
 ```bash
   cd ApexAgenteSimple
 ```
+</details>
 
 <details>
-<summary>Creating a Python virtual environment</summary>
+<summary style="color: gray;">Creating a Python virtual environment (optional)</summary>
 To create a Python virtual environment, run the following command
 
 ```bash
@@ -55,11 +56,15 @@ python3 -m venv venv
 
 </details>
 
-Start the application
+<details open>
+<summary>Start the application</summary>
+To start the application you can run this command
 
 ```bash
 ./runner <--type> [--n]
 ```
+
+</details>
 
 > **Note**
 >
